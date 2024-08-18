@@ -160,7 +160,7 @@ function ManageReward() {
                         <th>Reward</th>
                         <th>Reward Name</th>
                         <th>Category</th>
-                        <th>Quantity<div style={{ fontSize: '10px', color: 'black' }}></div></th>
+                        <th>eitis<div style={{ fontSize: '10px', color: 'black' }}></div></th>
                         <th> Price <div style={{ fontSize: '10px', color: 'black' }}>(Smart Points)</div></th>
                     </tr>
                 </thead>
