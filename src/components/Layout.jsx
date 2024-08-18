@@ -1,6 +1,7 @@
 import { Outlet, Link } from "react-router-dom";
 
 function Layout() {
+  
   return (
     <>
     <header className="header">
@@ -103,7 +104,7 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '10px 20px',
-    marginTop: '15%', // Adjust this value to move the header lower
+    marginTop: '15%', 
   },
   sidebar: {
     width: '300px',
@@ -125,7 +126,7 @@ const styles = {
     textDecoration: 'none',
     display: 'flex',
     alignItems: 'center',
-    gap: '20px',             // space between icon and text
+    gap: '20px',             
     marginLeft: '20px',
   },
   logo: {

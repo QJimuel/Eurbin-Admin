@@ -1,16 +1,18 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Outlet, Link, useLocation } from "react-router-dom";
-function ManageReward() {
+import { Link, useLocation } from "react-router-dom";
+import Modal from './Modal'; // Import the Modal component
+
+function EditReward() {
     const API_URL = 'http://localhost:7000/rewards';
 
     const [name, setName] = useState('');
     const [category, setCategory] = useState('');
     const [quantity, setQuantity] = useState('');
     const [price, setPrice] = useState('');
-  
     const [rewardId, setRewardId] = useState(null);
     const [Reward, setRewards] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
 
     const location = useLocation();  
 
@@ -48,6 +50,7 @@ function ManageReward() {
             if (response.status === 201) {
                 await fetchReward();
                 clearInput();
+                setIsModalOpen(false); // Close modal after creating
             }
         } catch (err) {
             console.error('Error creating reward:', err);
@@ -69,6 +72,7 @@ function ManageReward() {
             if (response.status === 200) {
                 await fetchReward();
                 clearInput();
+                setIsModalOpen(false); // Close modal after updating
             }
         } catch (err) {
             console.error('Error updating reward:', err);
@@ -105,6 +109,34 @@ function ManageReward() {
         setRewardId(null); // Reset rewardId as well
     }
 
+    const handleAddClick = () => {
+        setIsModalOpen(true); // Open modal when "Add" button is clicked
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false); // Close modal
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        switch (name) {
+            case 'name':
+                setName(value);
+                break;
+            case 'category':
+                setCategory(value);
+                break;
+            case 'quantity':
+                setQuantity(value);
+                break;
+            case 'price':
+                setPrice(value);
+                break;
+            default:
+                break;
+        }
+    };
+
     return (
         <>
         <h1 className='headings'>Management</h1>
@@ -113,7 +145,7 @@ function ManageReward() {
             <ul className="navList">
             <li >
                 <Link to="/Manage" >
-                <button className={location.pathname === "/Manage" ? "active-btn" : "inactive-btn"}>
+                <button className="edit-reward-button">
                         Reward Management
                     </button>
                 </Link>
@@ -145,14 +177,21 @@ function ManageReward() {
         <br />
         
         <div className="header-buttons">
-        <Link to="/Add" > 
-        <button> Add </button>
-        </Link>
-        <Link to="/Edit">
-        <button> Edit </button>
-        </Link>
+            <button onClick={handleAddClick}> Add </button>
+            <Link to="/Edit">
+                <button> Edit </button>
+            </Link>
+        </div>
 
-    </div>
+        {/* Modal for Add Reward */}
+        <Modal
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
+            onSubmit={createReward}
+            formData={{ name, category, quantity, price }}
+            onChange={handleChange}
+        />
+
         <div className="table-container">
             <table className="w3-table-all">
                 <thead>
@@ -160,34 +199,9 @@ function ManageReward() {
                         <th>Reward</th>
                         <th>Reward Name</th>
                         <th>Category</th>
-                        <th>Quantity<div style={{ fontSize: '10px', color: 'black' }}></div></th>
-                        <th> Price <div style={{ fontSize: '10px', color: 'black' }}>(Smart Points)</div></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {Reward.map(reward => (
-                        <tr key={reward._id}>
-                            <td>🖼️</td>
-                            <td>{reward.RewardName}</td>
-                            <td>{reward.Category}</td>
-                            <td>{reward.Quantity}</td>
-                            <td>{reward.Price}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-    
-            </div>
-            {/* 
-            <table className="w3-table-all">
-                <thead>
-                    <tr className="w3-light-grey">
-                        <th>Reward</th>
-                        <th>Reward Name</th>
-                        <th>Category</th>
                         <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Action</th>
+                        <th> Price <div style={{ fontSize: '10px', color: 'black' }}>(Smart Points)</div></th>
+                        <th>Quantity</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -198,46 +212,21 @@ function ManageReward() {
                             <td>{reward.Category}</td>
                             <td>{reward.Quantity}</td>
                             <td>{reward.Price}</td>
-                            <td>
-                                <button onClick={() => handleEditClick(reward)}>Edit</button>
-                                <button onClick={() => deleteReward(reward._id)}>Delete</button>
-                            </td> 
+                            <td className="action-buttons">
+                                <button onClick={() => handleEditClick(reward)} className="btn-edit">
+                                    <i className="fas fa-pencil-alt"></i>
+                                </button>
+                                <button onClick={() => deleteReward(reward._id)} className="btn-delete">
+                                    <i className="fas fa-trash"></i>
+                                </button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-            <br /><br /><br />
-            <h1>Edit Reward</h1>
-            <table>
-                <tbody>
-                    <tr>
-                        <td><label>Reward Name: </label></td>
-                        <td><input type="text" value={name} onChange={(e) => setName(e.target.value)} /></td>
-                    </tr>
-                    <tr>
-                        <td>Reward Category: </td>
-                        <td><input type="text" value={category} onChange={(e) => setCategory(e.target.value)} /></td>
-                    </tr>
-                    <tr>
-                        <td>Reward Quantity: </td>
-                        <td><input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} /></td>
-                    </tr>
-                    <tr>
-                        <td>Reward Price: </td>
-                        <td><input type="number" step="0.01" value={price} onChange={(e) => setPrice(e.target.value)} /></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button onClick={rewardId ? updateReward : createReward}>
-                                {rewardId ? 'Update' : 'Create'}
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            */}
+        </div>
         </>
     );
 }
 
-export default ManageReward;
+export default EditReward;
