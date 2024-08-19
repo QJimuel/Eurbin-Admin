@@ -1,5 +1,6 @@
 /* Reset some default styles */
 @import url('https://fonts.googleapis.com/css2?family=Manjari:wght@100;400;700&display=swap');
+@import '@fortawesome/fontawesome-free/css/all.min.css';
 
 body {
   font-family: 'Roboto', sans-serif;
@@ -106,7 +107,7 @@ body, h1, h2, p {
     border-radius: 5px;
   }
   
-  button:hover {
+  nav button:hover {
     background-color: #A00000;
     color: white;
   }
@@ -127,6 +128,7 @@ body, h1, h2, p {
   
   .nav {
     display: flex;
+    font: 1em sans-serif;
     margin-top: 40px;
     margin-left: -10px;
   }
@@ -152,10 +154,11 @@ body, h1, h2, p {
   }
   
   button {
+    font-family: "Manjari", system-ui;
     background-color: white;
     border: 1px solid #2B0100;
     border-radius: 10px;
-    padding: 5px 10px;
+    padding: 10px 10px 5px 10px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -179,8 +182,8 @@ body, h1, h2, p {
 
   .inactive-btn {
     background-color: white;
-    color: maroon;
-    border: 1px solid maroon;
+    color: #2B0100;
+    border: 1px solid #2B0100;
     cursor: pointer;
   }
 
@@ -196,10 +199,12 @@ body, h1, h2, p {
 }
 
 .header-buttons {
+  
   display: flex;
   gap: 5px; 
-  margin-left: 1000px;
-  margin-bottom: 10px;
+  margin-top: -1%;
+  margin-left: 90%;
+  margin-bottom: 2%;
 }
 
 .header-btn {
@@ -355,4 +360,37 @@ body, h1, h2, p {
   position: relative;
   text-align: center;
 
+}
+
+
+.btn-edit {
+  background: none;
+
+  cursor: pointer;
+  color: black; /* Change color if needed */
+}
+
+.btn-delete {
+  height: 30px;
+  background: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: black; /* Change color if needed */
+
+}
+
+.status {
+  padding: 6px;
+}
+
+.search-container input {
+  position: relative;
+  margin-left: 80%;
+  margin-bottom: 2%;
+  font-family: 'Manjari';
+  display: flex;
+  gap: 5px; 
+  padding: 10px 10px 5px 10px;
+  border: 1px solid #2B0100;
+  border-radius: 10px;
 }

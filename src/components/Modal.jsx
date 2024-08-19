@@ -1,13 +1,14 @@
 // Modal.js
 import React from 'react';
 
-const Modal = ({ isOpen, onClose, onSubmit, formData, onChange }) => {
+
+const Modal = ({ isOpen, onClose, onSubmit, formData, onChange, modalTitle  }) => {
   if (!isOpen) return null;
 
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Add Reward</h2>
+        <h2>{modalTitle}</h2>
         <div className="photobox">
             <p className='phototxt'>Add Image</p>
 

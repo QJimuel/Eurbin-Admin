@@ -13,6 +13,8 @@ function EditReward() {
     const [rewardId, setRewardId] = useState(null);
     const [Reward, setRewards] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+    const [isEditing, setIsEditing] = useState(false); // New state to differentiate between adding and editing
+    const [modalTitle, setModalTitle] = useState('Add Reward');
 
     const location = useLocation();  
 
@@ -99,6 +101,9 @@ function EditReward() {
         setCategory(reward.Category);
         setQuantity(reward.Quantity.toString());
         setPrice(reward.Price.toString());
+        setModalTitle('Edit Reward'); // Set the modal title to "Edit Reward"
+        setIsEditing(true); // Set editing mode
+        setIsModalOpen(true); // Open the modal with the data
     };
 
     const clearInput = () => {
@@ -106,11 +111,15 @@ function EditReward() {
         setCategory('');
         setQuantity('');
         setPrice('');
+        
         setRewardId(null); // Reset rewardId as well
+        setIsEditing(false); // Reset editing mode
     }
 
     const handleAddClick = () => {
+        clearInput(); // Clear inputs before adding new reward
         setIsModalOpen(true); // Open modal when "Add" button is clicked
+        setModalTitle('Add Reward');
     };
 
     const handleCloseModal = () => {
@@ -183,13 +192,14 @@ function EditReward() {
             </Link>
         </div>
 
-        {/* Modal for Add Reward */}
+        {/* Modal for Add/Edit Reward */}
         <Modal
             isOpen={isModalOpen}
             onClose={handleCloseModal}
-            onSubmit={createReward}
+            onSubmit={isEditing ? updateReward : createReward} // Check if editing or adding
             formData={{ name, category, quantity, price }}
             onChange={handleChange}
+            modalTitle={modalTitle}
         />
 
         <div className="table-container">
@@ -201,7 +211,7 @@ function EditReward() {
                         <th>Category</th>
                         <th>Quantity</th>
                         <th> Price <div style={{ fontSize: '10px', color: 'black' }}>(Smart Points)</div></th>
-                        <th>Quantity</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -230,3 +240,4 @@ function EditReward() {
 }
 
 export default EditReward;
+     

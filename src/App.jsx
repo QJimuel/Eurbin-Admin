@@ -36,6 +36,7 @@ function App() {
           
 
             <Route path="/" element={<Layout />}>
+    
               <Route path= "/home" element={<Home />} />
               <Route path="Record" element={<RewardRecord />} />
               <Route path="Manage" element={<ManageReward />} />

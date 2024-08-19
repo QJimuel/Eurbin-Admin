@@ -145,14 +145,11 @@ function ManageReward() {
         <br />
         
         <div className="header-buttons">
-        <Link to="/Add" > 
-        <button> Add </button>
-        </Link>
         <Link to="/Edit">
-        <button> Edit </button>
+        <button> Manage </button>
         </Link>
-
-    </div>
+        </div>
+        
         <div className="table-container">
             <table className="w3-table-all">
                 <thead>
@@ -160,7 +157,7 @@ function ManageReward() {
                         <th>Reward</th>
                         <th>Reward Name</th>
                         <th>Category</th>
-                        <th>eitis<div style={{ fontSize: '10px', color: 'black' }}></div></th>
+                        <th>Quantity<div style={{ fontSize: '10px', color: 'black' }}></div></th>
                         <th> Price <div style={{ fontSize: '10px', color: 'black' }}>(Smart Points)</div></th>
                     </tr>
                 </thead>
